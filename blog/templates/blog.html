@@ -1,0 +1,46 @@
+{% extends  "core.html" %}
+{% block page_content %}
+<div class="page-name">
+	{%if name is defined%}
+	<h1>{{name}}</h1>
+	{%endif%}
+</div>
+<div class="row post-list">
+{% from 'post-prev.html' import post_prev %}
+{%for post in posts%}
+    {{post_prev(post)}}
+{%else%}
+<div class="oops">
+	<h2>Записей не найдено!</h2>	
+</div>
+{%endfor%}
+</div>
+{% if pagination is defined %}
+<div class="row">
+	<div class="blog-pager">
+	    <nav>    
+	        <ul class="pagination">
+	            
+	            <li {% if not(pagination.has_prev) %}class="disabled"{% endif %}>
+	                <a href="{{ url_for_other_page(pagination.page - 1)
+	            }}" aria-label="Next">
+	                    <span aria-hidden="true">&laquo;</span>
+	                </a>
+	            </li>
+	            
+	            {%- for page in pagination.iter_pages() %}
+	                {% if page %}
+	                    <li {% if page == pagination.page %}class="active" {% endif %}><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
+	                {% endif %}
+	            {%- endfor %}
+	            <li {% if not(pagination.has_next) %}class="disabled"{% endif %}>
+	                <a href="{{ url_for_other_page(pagination.page + 1) }}" aria-label="Next">
+	                    <span aria-hidden="true">&raquo;</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </nav>
+	</div>
+</div>
+{%endif%}
+{% endblock %}

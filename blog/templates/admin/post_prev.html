@@ -1,0 +1,5 @@
+{%macro post_prev(post)%}
+<div class="row">
+	<a href="{{url_for('admin.edit_post',id=post.id)}}" class="list-group-item{% if post.published==True%} list-group-item-success{%endif%}"><span style="font-size:24px;"> {{post.id}}  {{post.name}}</span> {% if post.img %}<img src="{{post.img}}" style="height:42px; width:auto;">{%endif%}</a>
+</div>
+{%endmacro%}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css" >
+	<!-- jqury cdn -->
+	<script src="/static/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="/static/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/bswitch/js/bootstrap-switch.min.js"></script>
+	<link rel="stylesheet" href="/static/bswitch/css/bootstrap3/bootstrap-switch.min.css">
+	<script>
+    function toggler(divId) {
+        $(divId).toggle();
+    }</script>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row menu">
+		<ul class="nav nav-pills">
+		  <li role="presentation"><a href="{{url_for('admin.posts')}}">Посты</a></li>
+		  <li role="presentation"><a href="#">Теги</a></li>
+		</ul>
+	</div>
+	<div class="row flash">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="col-xs-12">
+                    <div class="col-xs-6">
+                        <div class="alert alert-{{ category }}"  id="alert-message-{{loop.index}}"role="alert">{{ message }} <span class="glyphicon glyphicon-remove" style="float:right; cursor:pointer;" onclick=toggler('#alert-message-{{loop.index}}')></span></div>                    
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+	</div>
+	<div class="row content">
+		{% block page_content %}
+        {% endblock %}
+	</div>
+</div>
+</body>
+</html>

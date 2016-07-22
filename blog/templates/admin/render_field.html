@@ -1,0 +1,15 @@
+{% macro render_field(field) %}
+  {% if field.errors %}
+  <div class="form-group has-warning">
+    {{ field.label(class="form-control-label") }}
+    {{ field(**kwargs) }}
+    {% for error in field.errors %}
+      <small class="text-muted">{{ error }}</small>
+    {% endfor %}
+  {# elif len(field.data)>0#}
+  {% endif %}
+    <div class="form-group has-success">
+      {{ field.label }}
+      {{ field(**kwargs) }}
+</div>
+{% endmacro %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Блог</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css" >
+	<!-- my style -->
+	<link rel="stylesheet" href="/static/style.css">
+	<!-- jqury cdn -->
+	<script src="/static/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="/static/bootstrap/bootstrap.min.js"></script>
+	<script src="/static/hor-arr.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			{% from 'menu.html' import menu %}
+            {{menu()}}
+		</div>
+	</div>
+	<div class="hor-nav">
+		<div class="brand">
+			<a class="" href="/">
+				<img alt="Blog" src="/static/images/logo.png"> Блог
+				
+			</a>
+		</div>
+		<div class="up-arr arr">
+			<span class="glyphicon glyphicon-chevron-up"></span> <p class="text-uppercase"><bold>Вверх</bold></p>
+		</div>
+		<div class="down-arr arr">
+			<span class="glyphicon glyphicon-chevron-down"></span>  <p class="text-uppercase"><bold>Вниз</bold></p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="col-md-9 blog-content">
+			{% if breadcrumb is defined %}
+			<div class="col-md-12">
+				<ol class="breadcrumb">
+					{% for item in breadcrumb %}
+					<li {% if item['active'] %}	class="active">{{item['name']}}{%else%}><a href="{{item['href']}}">{{item['name']}}</a>{%endif%}</li>
+					{% endfor %}
+				</ol>
+			</div>
+			{% endif %}
+		{% block page_content %}
+        {% endblock %}
+        </div>
+		<div class="col-md-3 sidebar">
+
+		</div>
+	</div>
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78049728-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

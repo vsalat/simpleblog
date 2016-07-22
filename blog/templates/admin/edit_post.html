@@ -1,0 +1,131 @@
+{% extends  "admin/core.html" %}
+{% block page_content %}
+<div class="col-xs-12">
+<script src="/static/ckeditor/ckeditor.js"></script>
+<script>
+$(document).ready(function(){
+	$(".published").bootstrapSwitch();
+})
+	
+</script>
+<form action="{{url_for('admin.edit_post',id=post.id)}}" role="form" id="form" method="POST" enctype="multipart/form-data">
+<div class="row">
+	<div class="col-md-3">
+		<div class="form-group">
+			{{form.name.label('Название поста')}}
+			{{form.name(class="form-control")}}
+		</div>
+	</div>
+	<div class="col-xs-1">
+		<div class="form-group">
+			{{form.published.label('Опубликовано')}}
+			{{form.published(class="published")}}
+		</div>
+	</div>
+	<div class="col-md-2">
+	<div class="form-group">
+		
+
+	{{form.imgfield.label('Фон')}}
+	{{form.img()}}
+	{%if post.img %}
+	<div class="img-prev" style="display:inline-block;">
+	<img src="{{post.img}}" style="width:100%; height:auto;">
+	<span class="glyphicon glyphicon-remove" style="color:red; cursor:pointer;" onClick='$("input[name=img]").val(""); $(".img-prev").css("display","none"); $("input[name=imgfield]").show();'></span>
+	</div>
+
+	{{form.imgfield(class="form-control", style="display:none;")}}
+	{%else%}
+
+	{{form.imgfield(class="form-control")}}
+	{%endif%}
+	</div>
+	</div>
+	<div class="col-md-5">
+	<div class="form-group">
+		{{form.tags.label('Теги (через ", " запятая пробел )')}}
+		{{form.tags(class="form-control")}}
+	</div>
+	</div>
+	<div class="col-md-1">
+		<div class="row">
+			<input type="submit" class="btn btn-success" style="margin-top:24px;" value="Обновить" />	
+		</div>
+	</div>
+</div>
+<div class="col-xs-4">
+<div class="form-group">
+	{{form.precontent.label('Мини текст')}}
+	{{form.precontent(class="form-control",id="precontent")}}
+</div>
+</div>
+<div class="col-xs-8">
+<div class="form-group">
+	{{form.content.label('Содержимое')}}
+	{{form.content(class="form-control", id="content")}}
+</div>
+</div>
+
+</form>
+
+<script>
+CKEDITOR.replace( 'content',{
+
+	filebrowserUploadUrl: '/admin_page/ckeditor_images',
+	fillEmptyBlocks : false,
+	tabSpaces : 0,
+	width:847,
+	disableNativeSpellChecker: false,
+	height:320,
+	extraPlugins:'dragresize,autogrow',
+	toolbarGroups:[
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] }
+	],
+	removeButtons:'About,FontSize,Font,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Save,NewPage,Preview,Print,BidiLtr,BidiRtl,Language,Copy,Cut,Paste,Find,SelectAll,Scayt'
+
+	
+} );
+  CKEDITOR.replace( 'precontent',{
+   filebrowserUploadUrl: '/admin_page/ckeditor_images',
+   fillEmptyBlocks : false,
+   tabSpaces : 0,
+   height:320,
+   disableNativeSpellChecker: false,
+   extraPlugins:'dragresize',
+   toolbarGroups:[
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] }
+	],
+	removeButtons:'Save,Print,Templates,Find,Replace,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Outdent,Indent,CreateDiv,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Cut,Copy,Paste,PasteText,PasteFromWord,NewPage,Preview,BidiLtr,BidiRtl,Language,Flash,Table,HorizontalRule,Smiley,PageBreak,Iframe,Styles,Format,Font,FontSize,TextColor,BGColor,Maximize,ShowBlocks,About,Scayt',
+  } );
+</script>
+</div>
+<div class="col-xs-12" style="margin-top:100px;"></div>
+{% endblock %}

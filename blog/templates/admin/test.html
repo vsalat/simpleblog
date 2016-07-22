@@ -1,0 +1,26 @@
+{% extends  "admin/core.html" %}
+{% block page_content %}
+<div class="col-xs-12">
+	<form action='{{url_for("admin.test")}}'  role="form" id="form" method="POST" enctype="multipart/form-data">
+		{{form.hidden_tag()}}
+		<div class="col-xs-5">
+			<div class="form-group">
+				{% from 'admin/render_field.html' import render_field%}
+				{{render_field(form.name,class="form-control")}}
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="row">
+				<input type="submit" class="btn btn-success" style="margin-top:24px;" value="Обновить" />	
+			</div>
+		</div>
+	</form>
+</div>
+<div class='col-xs-12 vkmembers'></div>
+<script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
+<script type="text/javascript">
+  VK.init({
+    apiId: 5473304
+  });
+</script>
+{% endblock %}
