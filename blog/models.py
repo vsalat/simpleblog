@@ -1,6 +1,11 @@
-from blog import db,blog
 import flask.ext.whooshalchemyplus as whooshalchemy
 import datetime
+from flask.ext.sqlalchemy import SQLAlchemy
+from blog import blog
+
+
+db = SQLAlchemy()
+
 
 relationship_table=db.Table('relationship_table',                            
 	db.Column('post_id', db.Integer,db.ForeignKey('posts.id'), nullable=False),

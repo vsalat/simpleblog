@@ -4,16 +4,26 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import sys
 import os
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-root_dir=os.path.dirname(os.path.realpath(__file__))
-blog = Flask(__name__)
-blog.config.from_object('config')
-blog.config['STORAGE_FOLDER'] = root_dir+'/storage/'
-blog.config['STATIC_FOLDER'] = root_dir+'/static/'
-blog.config['DOMAIN']='example.com'
-db = SQLAlchemy(blog)
-from blog import views, models
-from blog.admin_views import admin
-# Register blueprint(s)
-blog.register_blueprint(admin)
+def create_app(config_filename):
+    """
+    Flask application factory
+    :param config_filename:
+    :return:
+    """
+    app = Flask(__name__)
+    app.config.from_pyfile(config_filename)
+    # Корень приложения
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    # Путь к storage
+    app.config['STORAGE_FOLDER'] = root_dir + '/storage/'
+    # Пусть к статике
+    app.config['STATIC_FOLDER'] = root_dir + '/static/'
+    # ОРМ
+    from blog.models import db
+    db.init_app(app)
+    # Импорт моделей, вьюх
+    from blog import views
+    from blog.admin_views import admin
+    # Register blueprint(s)
+    app.register_blueprint(admin)
+    return app
